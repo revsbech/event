@@ -1,7 +1,7 @@
 <?php
 namespace Ag\Event\Tests\Functional\EventService;
 
-use TYPO3\Flow\Tests\FunctionalTestCase;
+use Neos\Flow\Tests\FunctionalTestCase;
 
 /**
  */
@@ -18,7 +18,7 @@ class StoreAndPublishTest extends FunctionalTestCase {
 	protected $eventService;
 
 	/**
-	 * @var \TYPO3\Flow\SignalSlot\Dispatcher
+	 * @var \Neos\Flow\SignalSlot\Dispatcher
 	 */
 	protected $dispatcher;
 

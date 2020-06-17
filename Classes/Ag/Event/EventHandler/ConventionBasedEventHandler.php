@@ -2,10 +2,10 @@
 namespace Ag\Event\EventHandler;
 
 use Ag\Event\Domain\Model\DomainEvent;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Log\SystemLoggerInterface;
-use TYPO3\Flow\Object\ObjectManagerInterface;
-use TYPO3\Flow\Reflection\ReflectionService;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Log\SystemLoggerInterface;
+use Neos\Flow\Object\ObjectManagerInterface;
+use Neos\Flow\Reflection\ReflectionService;
 
 /**
  * @Flow\Scope("singleton")

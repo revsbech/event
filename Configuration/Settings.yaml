@@ -9,7 +9,7 @@ Ag:
       sync: []
       async: []
 
-TYPO3:
+Neos:
   Flow:
     object:
       excludeClasses:

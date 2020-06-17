@@ -7,10 +7,10 @@ use Ag\Event\Exception\StoredEventNotFoundException;
 use Ag\Event\Service\EventService;
 use Pheanstalk\Job;
 use Pheanstalk\Pheanstalk;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cli\CommandController;
-use TYPO3\Flow\Core\Booting\Scripts;
-use TYPO3\Flow\Log\SystemLoggerInterface;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cli\CommandController;
+use Neos\Flow\Core\Booting\Scripts;
+use Psr\Log\LoggerInterface;
 
 /**
  */
@@ -47,7 +47,7 @@ class EventCommandController extends CommandController {
 
 	/**
 	 * @Flow\Inject
-	 * @var SystemLoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $systemLogger;
 

@@ -1,16 +1,15 @@
 <?php
 namespace Ag\Event\Command;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cli\CommandController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cli\CommandController;
 
 /**
  */
 class EventHandlerCommandController extends CommandController {
 
 	/**
-	 * @Flow\Inject(setting="eventHandlers")
-	 * @var array
+	 * @Flow\InjectConfiguration(path="eventHandlers")
 	 */
 	protected $eventHandlersConfiguration = array();
 

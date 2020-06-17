@@ -9,11 +9,11 @@ use Ag\Event\Exception\EventHandlingException;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Pheanstalk\Pheanstalk;
 use Pheanstalk\PheanstalkInterface;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Log\SystemLoggerInterface;
-use TYPO3\Flow\Object\ObjectManagerInterface;
-use TYPO3\Flow\Persistence\PersistenceManagerInterface;
-use TYPO3\Flow\Reflection\ReflectionService;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ObjectManagement\ObjectManagerInterface;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\Flow\Reflection\ReflectionService;
+use Psr\Log\LoggerInterface;
 
 /**
  * @Flow\Scope("singleton")
@@ -34,7 +34,7 @@ class EventService {
 
 	/**
 	 * @Flow\Inject
-	 * @var SystemLoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $systemLogger;
 
@@ -59,7 +59,7 @@ class EventService {
 	protected $pheanstalk;
 
 	/**
-	 * @Flow\Inject(setting="eventHandlers")
+	 * @Flow\InjectConfiguration(path="eventHandlers")
 	 * @var array
 	 */
 	protected $eventHandlersConfiguration;
