@@ -3,9 +3,10 @@ namespace Ag\Event\EventHandler;
 
 use Ag\Event\Domain\Model\DomainEvent;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Log\SystemLoggerInterface;
-use Neos\Flow\Object\ObjectManagerInterface;
+use Psr\Log\LoggerInterface;
+use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Reflection\ReflectionService;
+use TYPO3\Flow\Log\Logger;
 
 /**
  * @Flow\Scope("singleton")
@@ -14,7 +15,7 @@ abstract class ConventionBasedEventHandler implements EventHandler {
 
 	/**
 	 * @Flow\Inject
-	 * @var SystemLoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $systemLogger;
 
@@ -56,7 +57,7 @@ abstract class ConventionBasedEventHandler implements EventHandler {
 
 		$eventHandler = $this->objectManager->get($eventHandlerClassName);
 		if(!method_exists($eventHandler, 'handle')) {
-			$this->systemLogger->log(sprintf('EventHandler "%s" did not have a handle() method.', $eventHandlerClassName), LOG_WARNING);
+			$this->systemLogger->warning(sprintf('EventHandler "%s" did not have a handle() method.', $eventHandlerClassName));
 			return;
 		}
 

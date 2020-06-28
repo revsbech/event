@@ -14,6 +14,7 @@ use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\Reflection\ReflectionService;
 use Psr\Log\LoggerInterface;
+use Neos\Utility\TypeHandling;
 
 /**
  * @Flow\Scope("singleton")
@@ -78,13 +79,18 @@ class EventService {
 	 * @param DomainEvent $event
 	 */
 	public function publish(DomainEvent $event) {
+
 		if($this->logging) {
-			$this->systemLogger->log('Publish event ' . $this->reflectionService->getClassNameByObject($event), LOG_DEBUG);
+			//$this->systemLogger->log('Publish event ' . $this->reflectionService->getClassNameByObject($event), LOG_DEBUG);
+            //$this->systemLogger->log(LOG_DEBUG, 'Publish event ' . TypeHandling::getTypeForValue($event));
 		}
+
 		$event = new StoredEvent($event);
 		$this->persistenceManager->whitelistObject($event);
 		$this->storedEventRepository->add($event);
+
 		$this->events[] = $event;
+
 	}
 
 	/**
@@ -127,9 +133,11 @@ class EventService {
 			$eventHandlerInstance->handle($event);
 		} catch (\Exception $caughtException) {
 			$wrappedException = new EventHandlingException('Event could not be handled.', 1403853171, $caughtException);
-			$this->systemLogger->logException($wrappedException, array(
+			/*
+			$this->systemLogger->error($wrappedException, array(
 				'event' => serialize($event)
 			));
+			/**/
 		}
 	}
 
@@ -139,7 +147,7 @@ class EventService {
 	 */
 	protected function _syncPublish(StoredEvent $event, $eventHandlerClassName) {
 		if($this->logging) {
-			$this->systemLogger->log(sprintf('Synchronously publishing event #%s to "%s"', $event->getEventId(), $eventHandlerClassName), LOG_DEBUG);
+			$this->systemLogger->debug(sprintf('Synchronously publishing event #%s to "%s"', $event->getEventId(), $eventHandlerClassName));
 		}
 
 		$this->handleDomainEventByEventHandler($event->getEvent(), $eventHandlerClassName);
@@ -155,7 +163,7 @@ class EventService {
 		$this->pheanstalk->useTube($key)->put(serialize($storedEvent), PheanstalkInterface::DEFAULT_PRIORITY, 1);
 
 		if($this->logging) {
-			$this->systemLogger->log(sprintf('Asynchronously published event #%s to tube "%s"', $storedEvent->getEventId(), $key), LOG_INFO);
+			$this->systemLogger->info(sprintf('Asynchronously published event #%s to tube "%s"', $storedEvent->getEventId(), $key));
 		}
 	}
 }
